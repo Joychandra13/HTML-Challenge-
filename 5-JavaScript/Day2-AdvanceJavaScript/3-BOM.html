@@ -1,0 +1,278 @@
+<!-- ------------------------ -->
+   <!-- BOM (8 questions) -->
+<!-- ------------------------ -->
+
+
+<!-- 1. What is the Browser Object Model (BOM) in JavaScript?  -->
+<!-- --------------------------------------------------------- -->
+
+<!-- The Browser Object Model (BOM) is a set of JavaScript objects that allow you to interact with the browser itself, not just the webpage content. It helps you work with the browser window, URL, history, and more. -->
+
+<!-- Key BOM Objects: -->
+<!-- 1. window: Represents the browser window. You can use it to show alerts, set timers, and get the window size.
+ Example: window.alert("Hello!"); -->
+
+<!-- 2. navigator: Provides information about the browser, like its name and version.
+ Example: console.log(navigator.userAgent); -->
+ 
+<!-- 3. location: Represents the current page's URL. You can use it to change the URL or reload the page.
+ Example: location.href = "https://www.example.com"; -->
+
+<!-- 4. history: Allows you to navigate through the browser's history (back, forward).
+ Example: history.back(); -->
+
+<!-- 5. screen: Gives information about the user's screen size and resolution.
+ Example: console.log(screen.width); -->
+
+<!-- In short, the BOM lets you control and interact with the browser window and its features. -->
+ 
+ 
+ 
+
+<!-- 2. How does `window` differ from `document`?  -->
+<!-- --------------------------------------------- -->
+
+<!-- In JavaScript, window and document are both objects, but they represent different things: -->
+
+<!-- window: Represents the entire browser window, including everything in the browser environment (like the screen, browser controls, and all JavaScript functions). It is the global object in the browser, meaning any global variable or function is a property of window.
+ Example: window.alert("Hello!"); shows an alert in the entire browser window. -->
+
+<!-- document: Represents the webpage itself. It is used to interact with the content of the page, such as HTML elements, text, and structure. When you manipulate the content of the page (like changing text or clicking buttons), you use document.
+ Example: document.getElementById("myElement").innerText = "New Text"; changes the text of an element on the page -->
+
+
+
+
+<!-- 3. Explain how `localStorage`, `sessionStorage`, and `cookies` work and their differences.  -->
+<!-- ------------------------------------------------------------------------------------------- -->
+
+<!-- localStorage, sessionStorage, and cookies are all ways to store data in the browser, but they differ in how long they store data and how that data is accessed. localStorage stores data permanently in the browser, meaning the data stays even after the browser is closed and reopened. It’s useful for saving information that you want to keep across multiple sessions, like user preferences. Example: -->
+<script>
+    localStorage.setItem("username", "John");
+    console.log(localStorage.getItem("username")); // Outputs: John
+</script>
+    
+<!-- sessionStorage, on the other hand, stores data only for the current session, meaning the data is lost once the browser tab is closed. It’s useful for storing data that is needed temporarily while a user is interacting with the page, such as form data. Example: -->
+<script>
+    sessionStorage.setItem("sessionName", "Jane");
+    console.log(sessionStorage.getItem("sessionName")); // Outputs: Jane
+</script>
+    
+<!-- Cookies store small pieces of data that can be sent to the server with each HTTP request. They can have an expiration date and are often used for things like keeping a user logged in or tracking sessions across different devices. Example: -->
+<script>
+    document.cookie = "username=Alex; expires=Fri, 31 Dec 2024 23:59:59 GMT";
+    console.log(document.cookie); // Outputs: username=Alex
+</script>
+    
+<!-- While localStorage and sessionStorage allow you to store larger amounts of data, cookies are limited in size (usually around 4KB) and are mostly used for small, critical pieces of information. -->
+    
+    
+    <!-- • Project : Store and retrieve user preferences (like theme) using `localStorage`. -->
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Theme Preference</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            }
+        .light-theme {
+            background-color: white;
+            color: black;
+        }
+        .dark-theme {
+            background-color: black;
+            color: white;
+        }
+    </style>
+    </head>
+    <body>
+        <h1>Choose a Theme</h1>
+        <button id="lightBtn">Light Theme</button>
+        <button id="darkBtn">Dark Theme</button>
+       
+        <script>
+        // Check if the theme is already stored in localStorage
+            let storedTheme = localStorage.getItem("theme");
+       
+            // Apply the stored theme (if any)
+            if (storedTheme) {
+                document.body.className = storedTheme;
+            }
+       
+            // Event listener for light theme
+            document.getElementById("lightBtn").addEventListener("click", function() {
+                document.body.className = "light-theme";
+                localStorage.setItem("theme", "light-theme"); // Store the preference
+            });
+       
+            // Event listener for dark theme
+            document.getElementById("darkBtn").addEventListener("click", function() {
+                document.body.className = "dark-theme";
+                localStorage.setItem("theme", "dark-theme"); // Store the preference
+            });
+        </script>
+       
+       </body>
+    </html>
+       
+    
+<!-- 4. What is the purpose of the `navigator` object, and what properties does it have?  -->
+<!-- ------------------------------------------------------------------------------------ -->
+
+<!-- The navigator object in JavaScript provides information about the browser and the user's environment. It helps you get details about the browser, its version, the operating system, and other features like whether cookies are enabled. -->
+
+<!-- Key Properties of navigator: -->
+<!-- 1. navigator.userAgent: A string that gives the browser's name, version, and the operating system it's running on. Example: -->
+<script>
+console.log(navigator.userAgent);
+</script>
+
+<!-- 2.navigator.language: The default language of the browser. Example: -->
+<script>
+console.log(navigator.language);  // e.g., "en-US"
+</script>
+
+<!-- 3.navigator.platform: The platform or operating system of the user's device (e.g., "Win32", "MacIntel"). Example: -->
+<script>
+console.log(navigator.platform);  // e.g., "Win32"
+</script>
+
+<!-- 4.navigator.cookieEnabled: A boolean value that tells you if cookies are enabled in the browser. Example: -->
+<script>
+console.log(navigator.cookieEnabled);  // true or false
+</script>
+
+<!-- 5. navigator.onLine: A boolean value indicating if the user is currently online. Example: -->
+<script>
+console.log(navigator.onLine);  // true or false
+</script>
+    
+
+
+
+<!-- 5. How do `window.open` and `window.close` methods work in JavaScript?  -->
+<!-- ----------------------------------------------------------------------- -->
+
+<!-- The window.open and window.close methods in JavaScript are used to control browser windows or tabs. -->
+
+<!-- • window.open: Opens a new browser window or tab. You can specify the URL to open, the window's name, and its size (optional). Example: -->
+<script>
+window.open("https://www.example.com", "_blank");  // Opens a new tab with the URL
+</script>
+
+<!-- • window.close: Closes the current window or tab. This only works if the window was opened using window.open from the same script. It cannot close the original window (the one the script is running on) unless it was opened by the script itself. Example: -->
+<script>
+window.close();  // Closes the current window or tab
+</script>
+
+<!-- 6. Explain how to get the viewport width and height of a browser window using JavaScript.  -->
+<!-- ------------------------------------------------------------------------------------------ -->
+    
+<!-- To get the viewport width and height of the browser window in JavaScript, you can use window.innerWidth and window.innerHeight. These properties give you the size of the visible area (the part of the window where content is displayed). -->
+<!-- • window.innerWidth gives the width of the viewport. -->
+<!-- • window.innerHeight gives the height of the viewport. -->
+
+<!-- Example: -->
+<script>
+let width = window.innerWidth;
+let height = window.innerHeight;
+
+console.log("Width: " + width);
+console.log("Height: " + height);
+</script>
+
+<!-- These are useful when you want to know how big the browser window is for tasks like responsive design or adjusting content. -->
+
+    <!-- • Project : Create a function that logs the window’s size whenever it’s resized. -->
+    <script>
+        function logWindowSize() {
+            let width = window.innerWidth;
+            let height = window.innerHeight;
+            console.log("Width: " + width + ", Height: " + height);
+        }
+    
+        // Add event listener to track window resizing
+        window.addEventListener("resize", logWindowSize);
+    </script>
+
+    
+<!-- 7. What is the purpose of the `setTimeout` and `setInterval` functions?  -->
+<!-- -------------------------------------------------------------------------------------- -->
+
+<!-- The setTimeout and setInterval functions are used to run code after a delay or repeatedly at certain intervals. -->
+
+<!-- 1. setTimeout: Runs a function once after a specified delay (in milliseconds).Example: -->
+<script>
+setTimeout(() => {
+    console.log("This runs after 2 seconds!");
+}, 2000);  // 2000ms = 2 seconds
+</script>
+
+<!-- 2. setInterval: Runs a function repeatedly at specified intervals (in milliseconds).Example: -->
+<script>
+setInterval(() => {
+    console.log("This runs every 3 seconds!");
+}, 3000);  // 3000ms = 3 seconds
+</script>
+
+    <!-- • Project : Create a clock that updates every second using `setInterval`. -->
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Simple Clock</title>
+    </head>
+    <body>
+    
+        <h1 id="clock"></h1>
+    
+        <script>
+            function updateClock() {
+                let now = new Date();
+                let hours = now.getHours().toString().padStart(2, '0');
+                let minutes = now.getMinutes().toString().padStart(2, '0');
+                let seconds = now.getSeconds().toString().padStart(2, '0');
+                let timeString = hours + ":" + minutes + ":" + seconds;
+    
+                document.getElementById("clock").textContent = timeString;
+            }
+    
+            // Update the clock every second
+            setInterval(updateClock, 1000);
+    
+            // Initialize the clock immediately
+            updateClock();
+        </script>
+    
+    </body>
+    </html>
+    
+    
+<!-- 8. How can you detect if a user is online or offline using the BOM?  -->
+<!-- -------------------------------------------------------------------- -->
+
+<!-- You can detect if a user is online or offline using the navigator.onLine property from the Browser Object Model (BOM). This property returns true if the user is online (connected to the internet) and false if the user is offline (disconnected from the internet). -->
+
+<!-- You can also listen for online and offline events to know when the user's connection status changes. Example: -->
+
+<script>
+// Check if the user is online or offline
+if (navigator.onLine) {
+    console.log("You are online!");
+} else {
+    console.log("You are offline!");
+}
+
+// Listen for changes in connection status
+window.addEventListener("online", () => {
+    console.log("You are back online!");
+});
+
+window.addEventListener("offline", () => {
+    console.log("You are now offline.");
+});
+</script>

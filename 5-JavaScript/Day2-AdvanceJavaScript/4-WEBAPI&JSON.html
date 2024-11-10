@@ -1,0 +1,315 @@
+<!-- ------------------------------------ -->
+   <!-- Web API & JSON (10 questions)  -->
+<!-- ------------------------------------ -->
+
+<!-- 1. What is the Fetch API, and how does it work with Promises?  -->
+<!-- -------------------------------------------------------------- -->
+
+<!-- The Fetch API is a modern way to make HTTP requests in JavaScript. It allows you to retrieve data from a server or send data to a server asynchronously. The fetch() method is used to initiate the request and returns a Promise that resolves once the response is received. You can then handle the response using .then() to process the data or handle any errors with .catch(). -->
+
+<!-- For example, if you want to get data from an API, you can use the Fetch API like this: -->
+<script>
+fetch("https://api.example.com/data")
+   .then(response => response.json())  // Convert the response to JSON format
+   .then(data => {
+      console.log(data);  // Log the data to the console
+   })
+   .catch(error => {
+      console.log("Error:", error);  // Handle any errors that occur
+   });
+</script>
+
+
+   <!-- • Project : Fetch data from a public API (e.g., JSONPlaceholder) and display it on the page. -->
+   <!DOCTYPE html>
+   <html lang="en">
+   <head>
+       <meta charset="UTF-8">
+       <meta name="viewport" content="width=device-width, initial-scale=1.0">
+       <title>Fetch Data Example</title>
+   </head>
+   <body>
+   
+       <h1>Fetched Data</h1>
+       <ul id="data-list"></ul>
+   
+       <script>
+           // Fetch data from JSONPlaceholder API
+           fetch("https://jsonplaceholder.typicode.com/posts")
+               .then(response => response.json())  // Convert the response to JSON
+               .then(data => {
+                   const list = document.getElementById("data-list");
+   
+                   // Loop through the data and display it on the page
+                   data.forEach(post => {
+                       const listItem = document.createElement("li");
+                       listItem.textContent = `Title: ${post.title}`;
+                       list.appendChild(listItem);
+                   });
+               })
+               .catch(error => {
+                   console.log("Error:", error);  // Handle any errors
+               });
+       </script>
+   
+   </body>
+   </html>
+   
+
+
+
+<!-- 2. How does `XMLHttpRequest` differ from the Fetch API?  -->
+<!-- -------------------------------------------------------- -->
+
+<!-- XMLHttpRequest and the Fetch API are both used to make HTTP requests in JavaScript, but they have key differences. XMLHttpRequest is an older method that involves more complex code. It requires you to manually set up a request, handle responses using event listeners, and manage errors with callbacks. This can make the code harder to read and maintain. On the other hand, the Fetch API is a more modern and simpler approach. It returns a Promise, which makes it easier to handle asynchronous code using .then() for success and .catch() for errors. -->
+
+<!-- Here’s an example of using XMLHttpRequest: -->
+<script>
+var xhr = new XMLHttpRequest();
+xhr.open("GET", "https://jsonplaceholder.typicode.com/posts", true);
+xhr.onload = function() {
+    if (xhr.status === 200) {
+        console.log(JSON.parse(xhr.responseText));
+    }
+};
+xhr.onerror = function() {
+    console.log("Error:", xhr.statusText);
+};
+xhr.send();
+</script>
+
+<!-- And here’s how you would do the same thing using the Fetch API: -->
+<script>
+fetch("https://jsonplaceholder.typicode.com/posts")
+    .then(response => response.json())
+    .then(data => console.log(data))
+    .catch(error => console.log("Error:", error));
+</script>
+
+
+
+
+<!-- 3. Explain what JSON is and how it’s used in JavaScript.  -->
+<!-- --------------------------------------------------------- -->
+<!-- JSON (JavaScript Object Notation) is a simple, lightweight format used for storing and exchanging data. It’s easy for both humans to read and write, and machines to parse and generate. JSON is often used in JavaScript to send data to and receive data from a server. It represents data as key-value pairs, much like JavaScript objects, but it has specific rules such as keys must be enclosed in double quotes. JSON supports data types like strings, numbers, arrays, objects, booleans, and null. -->
+
+<!-- Here’s an example of JSON data: -->
+<!-- {
+    "name": "John",
+    "age": 30,
+    "isStudent": false
+} -->
+
+<!-- In JavaScript, you can convert objects to JSON format using JSON.stringify() and parse JSON strings back into JavaScript objects using JSON.parse().For example: -->
+<script>
+// Convert a JavaScript object to a JSON string
+let person = { name: "John", age: 30 };
+let jsonString = JSON.stringify(person);
+console.log(jsonString);  // '{"name":"John","age":30}'
+
+// Convert a JSON string back to a JavaScript object
+let parsedObject = JSON.parse(jsonString);
+console.log(parsedObject.name);  // "John"
+</script>
+
+
+
+
+<!-- 4. How do you parse JSON data in JavaScript, and how do you stringify JavaScript objects?  -->
+<!-- ------------------------------------------------------------------------------------------ -->
+<!-- JSON (JavaScript Object Notation) is a lightweight, text-based format used to store and exchange data. It is easy to read and write for humans, and easy for machines to parse and generate. JSON represents data as key-value pairs, similar to JavaScript objects, but with a few rules, like keys must be in double quotes. -->
+
+<!-- Parsing JSON: To convert a JSON string into a JavaScript object, you use JSON.parse(). This is helpful when you receive data from a server in JSON format and need to use it in your JavaScript code. Example of parsing JSON: -->
+<script>
+let jsonString1 = '{"name": "John", "age": 30}';
+let person1 = JSON.parse(jsonString);
+console.log(person.name);  // Output: John
+</script>
+
+<!-- Stringifying JavaScript Objects: To convert a JavaScript object into a JSON string, you use JSON.stringify(). This is useful when you want to send data from JavaScript to a server. Example of stringifying an object: -->
+<script>
+let person2 = { name: "John", age: 30 };
+let jsonString2 = JSON.stringify(person);
+console.log(jsonString);  // Output: {"name":"John","age":30}
+</script>
+
+
+   <!-- • Project : Create a function that converts an object to JSON and back to an object. -->
+   <script>
+   function convertObjectToJSONAndBack(obj) {
+      // Convert the object to a JSON string
+      let jsonString = JSON.stringify(obj);
+      console.log("JSON String:", jsonString);
+      
+      // Convert the JSON string back to an object
+      let parsedObject = JSON.parse(jsonString);
+      console.log("Parsed Object:", parsedObject);
+   }
+
+   // Example usage:
+   let person3 = { name: "John", age: 30 };
+   convertObjectToJSONAndBack(person);
+   </script>
+  
+
+
+
+<!-- 5. What is CORS, and why do we need it when making API requests?  -->
+<!-- ----------------------------------------------------------------- -->
+
+<!-- CORS (Cross-Origin Resource Sharing) is a security feature that restricts web pages from making requests to a different domain than the one it was loaded from. This prevents malicious websites from accessing sensitive data. To allow cross-origin requests, the server needs to include special headers like Access-Control-Allow-Origin. -->
+<!-- Example: If you're trying to make a request from https://mywebsite.com to an API on https://api.example.com, the API must include a CORS header to allow your website to access its data. -->
+
+
+
+
+<!-- 6. Explain how the `FormData` API works and when you’d use it.  -->
+<!-- --------------------------------------------------------------- -->
+
+<!-- The FormData API is used to easily collect data from HTML forms and send it to a server. It allows you to create a set of key/value pairs representing the form fields and their values. This is helpful when you need to send form data, especially files, via AJAX requests without reloading the page. -->
+
+<!-- How it works: You create a FormData object from a form, and then you can send it with fetch() or XMLHttpRequest. Example: -->
+<script>
+let form = document.querySelector("form");
+let formData = new FormData(form);
+
+// Send the form data using fetch
+fetch("/submit", {
+    method: "POST",
+    body: formData
+})
+.then(response => response.json())
+.then(data => console.log(data))
+.catch(error => console.log("Error:", error));
+</script>
+
+<!-- When to use it: You'd use FormData when you need to handle form submissions, especially for forms with file inputs, or when you want to send data asynchronously without reloading the page. -->
+
+
+
+
+<!-- 7. What is the purpose of the `History` API, and how do `pushState` and `replaceState` work?  -->
+<!-- --------------------------------------------------------------------------------------------- -->
+
+<!-- The History API allows you to manage the browser's history and change the URL without reloading the page. This is useful for single-page applications (SPAs) where you want to update the URL as users navigate between different views. -->
+
+<!-- pushState and replaceState: -->
+<!-- • pushState(): Adds a new entry to the browser's history. It changes the URL and keeps the current page in the history stack. -->
+<!-- • replaceState(): Updates the current history entry, changing the URL without adding a new entry. -->
+
+<!-- Example: -->
+<script>
+// pushState example
+history.pushState({ page: 1 }, "Page 1", "/page1");
+
+// replaceState example
+history.replaceState({ page: 2 }, "Page 2", "/page2");
+</script>
+
+
+   <!-- • Project : Create a simple single-page navigation system with `pushState`. -->
+   <!DOCTYPE html>
+   <html lang="en">
+   <head>
+       <meta charset="UTF-8">
+       <title>Simple SPA</title>
+   </head>
+   <body>
+       <h1>Simple Navigation</h1>
+       <button onclick="navigate('home')">Home</button>
+       <button onclick="navigate('about')">About</button>
+       <button onclick="navigate('contact')">Contact</button>
+   
+       <div id="content"></div>
+   
+       <script>
+           function navigate(page) {
+               let content = document.getElementById("content");
+   
+               // Update content based on the page
+               if (page === "home") content.innerHTML = "<h2>Home Page</h2>";
+               if (page === "about") content.innerHTML = "<h2>About Page</h2>";
+               if (page === "contact") content.innerHTML = "<h2>Contact Page</h2>";
+   
+               // Change the URL
+               history.pushState({ page: page }, page, `/${page}`);
+           }
+   
+           // Handle browser back/forward actions
+           window.onpopstate = function(event) {
+               if (event.state) navigate(event.state.page);
+           };
+       </script>
+   </body>
+   </html>
+   
+
+
+
+<!-- 8. How can you handle errors in API requests with `try/catch` blocks and the `.catch()` method? -->
+<!-- ----------------------------------------------------------------------------------------------- -->
+
+<!-- To handle errors in API requests, you can use try/catch blocks with async/await or the .catch() method with promises. -->
+
+<!-- Using try/catch with async/await: The try/catch block is used to catch any errors that occur during an API request when using async/await. If an error occurs, it goes to the catch block. Example: -->
+<script>
+async function fetchData() {
+    try {
+        let response = await fetch('https://api.example.com/data');
+        if (!response.ok) throw new Error('Network response was not ok');
+        let data = await response.json();
+        console.log(data);
+    } catch (error) {
+        console.log('Error:', error.message);
+    }
+}
+fetchData();
+</script>
+
+<!-- Using .catch() with Promises: The .catch() method handles errors in a promise chain. It runs if there’s an error during the fetch or any other part of the chain. Example: -->
+<script>
+fetch('https://api.example.com/data')
+    .then(response => {
+        if (!response.ok) throw new Error('Network response was not ok');
+        return response.json();
+    })
+    .then(data => console.log(data))
+    .catch(error => console.log('Error:', error.message));
+</script>
+
+
+
+
+<!-- 9. What are WebSockets, and how do they differ from HTTP requests? -->
+<!-- ------------------------------------------------------------------ -->
+
+<!-- WebSockets allow continuous, two-way communication between a client and server. Unlike HTTP requests, which are one-time interactions, WebSockets keep the connection open for ongoing data exchange. Example: -->
+<script>
+let socket = new WebSocket('ws://example.com/socket');
+
+// Send message to server
+socket.send('Hello Server');
+
+// Receive message from server
+socket.onmessage = (event) => console.log(event.data);
+</script>
+
+<!-- Difference: -->
+<!-- • HTTP: Request, server responds, then connection closes. -->
+<!-- • WebSockets: Connection stays open for real-time, bidirectional communication. -->
+
+
+
+
+<!-- 10. Explain the basics of the Service Worker API and its use in creating progressive web apps (PWAs). -->
+<!-- ----------------------------------------------------------------------------------------------------- -->
+<!-- The Service Worker API allows you to run scripts in the background of your web app, even when it's not open in the browser. It’s essential for creating Progressive Web Apps (PWAs), as it enables features like offline functionality, push notifications, and background sync. -->
+
+<!-- How it works: Service workers intercept network requests and can cache assets (like images, JavaScript, etc.) so the app can work offline or load faster. Once a service worker is registered, it runs in the background and can handle tasks even when the user isn't actively using the app. Example of registering a service worker: -->
+<script>
+if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/service-worker.js')
+        .then(registration => console.log('Service Worker registered', registration))
+        .catch(error => console.log('Service Worker registration failed', error));
+}
+</script>

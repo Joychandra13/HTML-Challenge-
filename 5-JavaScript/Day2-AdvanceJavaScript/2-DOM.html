@@ -1,0 +1,311 @@
+<!-- ------------------------ -->
+   <!-- DOM (8 questions)  -->
+<!-- ------------------------ -->
+
+
+<!-- 1. What is the DOM, and how does JavaScript interact with it?  -->
+<!-- -------------------------------------------------------------- -->
+
+<!-- The DOM (Document Object Model) is a way for JavaScript to interact with HTML or XML documents. It represents a webpage as a tree of objects, where each object is an element (like a <div>, <p>, or <button>). -->
+
+<!-- How JavaScript Uses the DOM: -->
+<!-- • Accessing Elements: JavaScript can find elements on the page. For example: -->
+<script> let element = document.getElementById("myElement"); </script>
+
+
+<!-- • Changing Content: JavaScript can change the text or style of elements. For example: -->
+<script> 
+element.textContent = "New Text!";
+element.style.color = "blue";
+</script>
+
+
+<!-- • Adding and Removing Elements: JavaScript can create new elements and add them to the page, or remove existing ones. For example: -->
+<script> 
+let newDiv = document.createElement("div");
+document.body.appendChild(newDiv);
+</script>
+
+<!-- • Handling Events: JavaScript can make the page respond to user actions (like clicks). For example: -->
+<script> 
+element.addEventListener("click", function() {
+  alert("Clicked!");
+}); 
+</script>
+
+<!-- Exmple: -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>DOM Example</title>
+</head>
+<body>
+    <div id="greeting">Hello!</div>
+    <button id="changeButton">Change Text</button>
+
+    <script>
+        let button = document.getElementById("changeButton");
+        button.addEventListener("click", function() {
+            let greeting = document.getElementById("greeting");
+            greeting.textContent = "Hello, JavaScript!";
+        });
+    </script>
+</body>
+</html>
+
+
+
+
+<!-- 2. Explain how to select elements in the DOM using methods like `getElementById`, `querySelector`, and `querySelectorAll`.  -->
+<!-- --------------------------------------------------------------------------------------------------------------------------- -->
+
+<!-- To select elements on a webpage using JavaScript, you can use these methods: -->
+<!-- • getElementById(): Selects an element by its ID. It returns one element. Example:
+let element = document.getElementById("myElement"); -->
+
+<!-- • querySelector(): Selects the first element that matches a CSS selector (like a class or ID). Example:
+let element = document.querySelector(".myClass"); -->
+
+<!-- • querySelectorAll(): Selects all elements that match a CSS selector and returns them as a list. Example:
+let elements = document.querySelectorAll(".myClass"); -->
+
+
+   <!-- • Project : Create a webpage with a button that changes the color of a `div` when clicked. -->
+   <!DOCTYPE html>
+   <html lang="en">
+   <head>
+       <meta charset="UTF-8">
+       <meta name="viewport" content="width=device-width, initial-scale=1.0">
+       <title>Change Color</title>
+       <style>
+           #colorDiv {
+               width: 200px;
+               height: 200px;
+               background-color: lightgray;
+               margin-top: 20px;
+           }
+       </style>
+   </head>
+   <body>
+   
+       <button id="ColorChangeButton">Change Color</button>
+       <div id="colorDiv"></div>
+   
+       <script>
+           // Select the button and div
+           let button1 = document.getElementById("ColorChangeButton");
+           let colorDiv = document.getElementById("colorDiv");
+   
+           // Add event listener to button
+           button1.addEventListener("click", function() {
+               // Change the color of the div
+               colorDiv.style.backgroundColor = "blue";
+           });
+       </script>
+   
+   </body>
+   </html>
+   
+
+
+
+<!-- 3. How do event listeners work in JavaScript? Explain `addEventListener`.  -->
+<!-- -------------------------------------------------------------------------- -->
+
+<!-- In JavaScript, event listeners are used to make a webpage respond to user actions, like clicks, mouse movements, or key presses. An event listener "listens" for a specific event on an element and runs a function when that event happens. -->
+<!-- The addEventListener method is used to set up an event listener. It lets you attach a function (called a callback) to run whenever a specific event occurs on an element. -->
+
+<!-- Syntax: 
+element.addEventListener("event", function);
+-->
+
+<!-- • event: The type of event to listen for, like "click", "mouseover", or "keydown". -->
+<!-- • function: The code to run when the event happens. -->
+
+<!-- Example: -->
+<button id="myButton">Click me</button>
+
+<script>
+    let button2 = document.getElementById("myButton");
+
+    // Set up an event listener on the button
+    button2.addEventListener("click", function() {
+        alert("Button was clicked!");
+    });
+</script>
+
+<!-- In this example, addEventListener listens for a "click" on myButton. When clicked, the function runs and shows an alert saying, “Button was clicked!” -->
+
+
+
+
+<!-- 4. What is event delegation, and why is it useful?  -->
+<!-- --------------------------------------------------- -->
+
+<!-- Event delegation is a technique in JavaScript where a single event listener is added to a parent element instead of adding separate listeners to each child element. The parent can "listen" for events that happen on its children by taking advantage of event bubbling (when an event on a child element "bubbles up" to its parents). -->
+
+<!-- Why Event Delegation is Useful -->
+<!-- • Improves Performance: Instead of adding many listeners to individual elements, one listener on the parent can handle all of them. This reduces memory use and improves performance. -->
+<!-- • Handles Dynamic Elements: When new child elements are added to the parent, the parent’s event listener can still respond to them without needing new listeners. -->
+
+<!-- Example: -->
+
+<ul id="itemList">
+    <li>Item 1</li>
+    <li>Item 2</li>
+    <li>Item 3</li>
+</ul>
+
+<script>
+    let list = document.getElementById("itemList");
+
+    list.addEventListener("click", function(event) {
+        if (event.target.tagName === "LI") {
+            alert("You clicked on " + event.target.textContent);
+        }
+    });
+</script>
+<!-- Here, a single listener on <ul> handles clicks on all <li> items, even if new items are added later. This is more efficient and makes code easier to manage. -->
+
+
+   <!-- • Project : Create a list where clicking on each list item logs its content. Use event delegation. -->
+   <ul id="itemList1">
+      <li>Item 1</li>
+      <li>Item 2</li>
+      <li>Item 3</li>
+  </ul>
+  
+  <script>
+      // Select the parent <ul> element
+      let list1 = document.getElementById("itemList1");
+  
+      // Add event listener to the parent <ul>
+      list1.addEventListener("click", function(event) {
+          // Check if the clicked element is an <li>
+          if (event.target.tagName === "LI") {
+              console.log(event.target.textContent);
+          }
+      });
+  </script>
+  
+
+
+
+<!-- 5. What is the difference between `innerHTML`, `textContent`, and `innerText`?  -->
+<!-- ------------------------------------------------------------------------------- -->
+
+<!-- In JavaScript, innerHTML, textContent, and innerText are used to interact with the content inside HTML elements, but they behave differently. innerHTML gets or sets the HTML content, including any tags inside an element. This means you can change both the text and the HTML structure within an element. For example, element.innerHTML = "<strong>Hello</strong>" would add bold text inside the element. On the other hand, textContent deals only with the plain text inside the element, ignoring any HTML tags. If you set element.textContent = "Hello", it will only update the text, leaving out any HTML formatting. Lastly, innerText gets or sets the visible text on the page, considering styles like display: none, which means hidden elements won’t be included. It’s similar to textContent, but it focuses on what is shown to the user. Use innerHTML for adding HTML, textContent for working with plain text, and innerText for dealing with visible text. -->
+
+
+
+
+<!-- 6. Explain how you can manipulate CSS styles of an element using JavaScript.  -->
+<!-- ----------------------------------------------------------------------------- -->
+
+<!-- You can change the CSS styles of an element in JavaScript using the style property. This allows you to directly modify the inline styles of an element. Example: -->
+<Script>
+let element = document.getElementById("myElement");
+
+element.style.backgroundColor = "blue"; // Change background color
+element.style.fontSize = "20px";        // Change font size
+element.style.color = "white";          // Change text color
+</Script>
+
+
+
+
+<!-- 7. How do you traverse the DOM? Explain `parentNode`, `firstChild`, `lastChild`, etc.  -->
+<!-- -------------------------------------------------------------------------------------- -->
+
+<!-- Traversing the DOM means moving through the structure of HTML elements. JavaScript provides several properties to access elements related to other elements in the DOM. -->
+
+<!-- Key Properties for Traversing the DOM: -->
+<!-- • parentNode: Refers to the parent element of the current element. Example: -->
+<script>
+let child = document.getElementById("myElement");
+let parent = child.parentNode; // Gets the parent of myElement
+</script>
+
+<!-- • firstChild: Refers to the first child of the current element (can be text or an element). Example: -->
+<script>
+let parent1 = document.getElementById("myElement");
+let first = parent.firstChild; // Gets the first child (could be text or an element)
+</script>
+
+<!-- • lastChild: Refers to the last child of the current element. Example: -->
+<script>
+let parent2 = document.getElementById("myElement");
+let last = parent.lastChild; // Gets the last child
+</script>
+
+<!-- • nextSibling: Refers to the next sibling element after the current element. Example: -->
+<script>
+let current = document.getElementById("myElement");
+let next = current.nextSibling; // Gets the next sibling of myElement
+</script>
+
+<!-- • previousSibling: Refers to the previous sibling element before the current element. Example: -->
+
+<script>
+let current1 = document.getElementById("myElement");
+let previous = current.previousSibling; // Gets the previous sibling
+</script>
+
+
+
+
+<!-- 8. What is the purpose of `preventDefault()` and `stopPropagation()` in event handling?  -->
+<!-- ---------------------------------------------------------------------------------------- -->
+
+<!-- In event handling, preventDefault() and stopPropagation() are methods used to control how events behave. -->
+
+<!-- 1. preventDefault(): This method stops the default action of an event from happening. For example, if you click on a link, the default action is to navigate to a new page. Using preventDefault() prevents this from happening. Example: -->
+
+<script>
+let link = document.getElementById("myLink");
+link.addEventListener("click", function(event) {
+    event.preventDefault();  // Stops the link from navigating
+    console.log("Link click prevented!");
+});
+</script>
+
+<!-- 2. stopPropagation(): This method stops the event from bubbling up to parent elements. Normally, when an event happens on an element, it bubbles up to its parent and other ancestors. Using stopPropagation() prevents this from happening. Example: -->
+
+<script>
+let button3 = document.getElementById("myButton");
+button3.addEventListener("click", function(event) {
+    event.stopPropagation();  // Stops the event from reaching parent elements
+    console.log("Event propagation stopped!");
+});
+</script>
+
+
+   <!-- • Project: Create a form that prevents submission and logs a message instead. -->
+
+   <!DOCTYPE html>
+   <html lang="en">
+   <head>
+       <meta charset="UTF-8">
+       <meta name="viewport" content="width=device-width, initial-scale=1.0">
+       <title>Prevent Form Submission</title>
+   </head>
+   <body>
+   
+       <form id="myForm">
+           <input type="text" placeholder="Enter text">
+           <button type="submit">Submit</button>
+       </form>
+   
+       <script>
+           let form = document.getElementById("myForm");
+   
+           // Prevent form submission and log a message
+           form.addEventListener("submit", function(event) {
+               event.preventDefault(); // Prevent form from submitting
+               console.log("Form submission prevented!");
+           });
+       </script>
+   
+   </body>
+   </html>
